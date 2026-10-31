@@ -1,48 +1,30 @@
-import os
-import platform
-import subprocess
+from modules.system_info import get_system_info
+from modules.permission_checks import check_permissions
+from modules.security_report import generate_report
 
-print("=" * 50)
-print(" LINUX PRIVILEGE ESCALATION AUDIT TOOLKIT")
-print("=" * 50)
+def main():
 
-print("\n[1] SYSTEM INFORMATION")
+    print("=" * 50)
+    print(" LINUX PRIVILEGE ESCALATION AUTOMATION TOOLKIT")
+    print("=" * 50)
 
-print("Operating System:", platform.system())
-print("Hostname:", platform.node())
-print("Kernel:", platform.release())
-print("Architecture:", platform.machine())
+    print("\n[1] SYSTEM INFORMATION")
+    get_system_info()
 
-print("\n[2] CURRENT USER")
+    print("\n[2] PERMISSION AUDIT")
+    check_permissions()
 
-try:
-    user = subprocess.check_output(
-        ["whoami"], text=True
-    ).strip()
-    print("Current User:", user)
-except Exception:
-    print("User information unavailable")
+    print("\n[3] SECURITY REPORT")
 
-print("\n[3] SUDO PERMISSIONS")
+    results = [
+        "System information checked",
+        "File permissions audited",
+        "Security review completed"
+    ]
 
-try:
-    result = subprocess.run(
-        ["sudo", "-n", "-l"],
-        capture_output=True,
-        text=True,
-        timeout=5
-    )
-    print(result.stdout or "No sudo permissions displayed")
-except Exception:
-    print("Sudo check unavailable")
+    generate_report(results)
 
-print("\n[4] SECURITY AUDIT")
+    print("\nAUDIT COMPLETED SUCCESSFULLY")
 
-paths = ["/etc/passwd", "/etc/shadow", "/etc/sudoers"]
-
-for path in paths:
-    if os.path.exists(path):
-        print(path, "EXISTS")
-
-print("\n[5] AUDIT COMPLETED")
-print("=" * 50)
+if __name__ == "__main__":
+    main()
