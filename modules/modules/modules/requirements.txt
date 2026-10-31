@@ -1,0 +1,5 @@
+Linux Privilege Escalation Automation Toolkit
+
+This project uses Python standard library modules.
+
+No external packages are required.
